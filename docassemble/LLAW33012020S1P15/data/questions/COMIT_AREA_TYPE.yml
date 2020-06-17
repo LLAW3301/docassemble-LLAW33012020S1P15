@@ -5,14 +5,11 @@ metadata:
   description: |
     The new and simplified application for stay form
   authors:
-    - name: Kaylee Fietz , Deema Kabbara , Jamie Dayman and Elizabeth Nelson
+    - name: Kaylee Fietz, Deema Kabbara, Jamie Dayman and Elizabeth Nelson
       organization: Flinders with SACAT.
   revision_date: 2020-06-08
   show login: False
 ---
----
-# Modify the post default screen part to attribute work to Flinders and your client
-# Remember to replace XXXX with your client's name.
 default screen parts:
   post: |
     <div style="display: flex; height: 200px; align-items: flex-end; flex-direction: row-reverse">
@@ -25,10 +22,6 @@ default screen parts:
     </div>
     </div>
 ---
-image sets:
-    images:
-      interim: INTERIM.png.svg
----
 objects:
   - endpoint: DADict
   - EHNlogo: DAStaticFile.using(filename='SACAT_Header.png')
@@ -39,22 +32,22 @@ code: |
 # SACAT's website is actually yellow so the colour works
 ---
 features:
-  css: C4_01_lnf_with_comments.css
+  css: SACAT.css
   debug: False
   hide standard menu: True
 ---
 mandatory: True
 question: Application for Stay Form
 subquestion: |
-  Welcome to the SACAT application for stay form.
+  Welcome!
  
-  This application is designed to help complete SACAT’s application for stay.
+  This application can be used to complete SACAT’s application for stay form. 
  
   You must have first applied for internal review to apply for a stay. For more information about applying for internal review, [click here.](http://www.sacat.sa.gov.au/reviews-of-sacat-decisions/review-of-sacat-decisions-internal-review)
  
   For more information about what applying for a stay is, [click here.](http://www.sacat.sa.gov.au/upload/Factsheet%20-%20Seeking%20a%20Stay%20of%20a%20Tribunal%20Order.pdf)
  
-  We suggest users fill out the form with a capable person who has an adequate literacy level if you have a non-English speaking background or a disability.
+  **Note:** If you have a disability or a Non-English speaking background, we encourage you to fill this form out with assistance from someone who is comfortable with English.
 buttons:
 - Continue: continue
 - Exit: exit
@@ -81,11 +74,11 @@ code: |
   else:
     endpoint['ineligible']
 ---
-event: endpoint['ineligible'] 
+event: endpoint['ineligible']
 question: Eligibility requirements not met
 subquestion: |
-  You must first apply for internal review of the original decision to apply for a stay of the original order. 
-  
+  You must apply for internal review of the original decision before you can apply for a stay of the original order.
+ 
   For information about applying for internal review, [click here.](http://www.sacat.sa.gov.au/reviews-of-sacat-decisions/review-of-sacat-decisions-internal-review)
 buttons:
   - Exit: exit
@@ -93,34 +86,36 @@ buttons:
   - Restart: restart
 ---
 event: endpoint['eligible']
-question: Your answers
+question: Thank you for answering the questions provided. You are almost done!
 subquestion: |
-  Thank you for answering the questions provided.
-  Here is a summary of your answers below.
-  Please find your application for stay form attached.
+  Here is a summary of your answers in the table below.
+  Please find your application for stay form attached under the table. This form has all your answers filled in and can now be sent to SACAT for them to consider.
  
-  **Please email your application for stay document to *sacat@sacat.sa.gov.au* and quote your internal review application ID.**
+  **Please copy the email address *sacat@sacat.sa.gov.au* into the email bar below the table and press send.**
  
   Information required|Your details
   --------------------|------------
-  Your name|${ EHNsalutation } ${ EHNfirstname } ${ EHNlastname} ${ Name_Salutation }
+  Your name|${ EHNsalutation } ${ EHNfirstname } ${ EHNlastname} ${ EHNemailaddress } ${ EHNphonenumber }
   Applicant or not|${ EHNtype }
   Applied for internal review|${ EHNyes_internal_review }
   Reference number|${ EHNSACAT_ref_no } ${ Refno }
   Date of original decision|${ EHNdate }
-  Part of decision|${ EHNPart_of_decision } ${ partorder }
+  Part of decision|${ EHNpart_of_decision } ${ partorder }
   Argument|${ EHNargument }
   Evidence|${ EHNevidence }
   Consequences|${ EHNconsequence }
   Order seeking|${ EHNorder } ${ Order }
   Other party|${ EHNparties }
+attachment:
+  docx template file: application_for_stay_form1.docx
+  valid formats:
+   - pdf
 buttons:
   - I'm done: exit
     url: http://www.sacat.sa.gov.au
   - Do it again: restart
 ---
-mandatory: True
-question: What is your name?
+question: What are your details?
 fields:
   - Salutation: EHNsalutation
     choices:
@@ -129,89 +124,89 @@ fields:
       - Mrs
       - Ms
     default: |
-      ${ Salutation }
+     ${ Salutation }
   - First Name: EHNfirstname
     default: |
       ${ Firstname }
   - Last Name: EHNlastname
     default: |
-      ${ Name_Salutation }
+      ${ Lastname }
+  - Email address: EHNemailaddress
+    default: |
+      ${ Emailaddress }
+  - Phone Number: EHNphonenumber
+    default: |
+      ${ PhoneNumber }
 ---
 code: |
   Salutation = "Mr"
   Firstname = "Bob"
-  Name_Salutation = "Needshelp"
+  Lastname = "Needshelp"
+  Emailaddress = "bob.jane@hotmail.com"
+  PhoneNumber = "0423346778"
 ---
-mandatory: True
-question: Are you the applicant or are you completing this form out for  the applicant?
+question: Are you the applicant or are you completing this form out for the applicant?
 fields:
   - no label: EHNtype
     choices:
       - I am the applicant
       - I am completing this form for the applicant
-      - Other  
 ---
 question: Have you applied for internal review of the original decision?
 subquestion: |
-fields: 
+fields:
   - no label: EHNyes_internal_review
     choices:
       - Yes
       - No
 ---
-mandatory: True
 question: What is your SACAT reference number?
 subquestion: |
-  Your SACAT reference number looks like **2020/SIR000000** and can be found...
-   
-  An interim reference number looks like : **IMAGE GOES HERE**
-   
-  Note: Please ensure it is the internal review reference number **not** the reference number for the original decision.
+  Your SACAT reference number will look something like this: [FILE ID_Number_.jpeg]
+  
+  You can find this number at the top of your internal review application form.
+  
+  **Note:** Please ensure it is the internal review reference number **not** the reference number for the original decision.
 fields:
   - no label: EHNSACAT_ref_no
     default: |
       ${ Refno }
 ---
 code: |
-  Refno = "2020/SIR000000"
-
+  Refno = "1234567"
 ---
-mandatory: True
-question: What is the date of the original decision that SACAT made against them?
+question: What is the date of the original decision that SACAT made against you?
 subquestion: |
-    The  date of the original order can be found on the copy of the order which you will have been provided by SACAT, either by email or post. If you do not have a copy of the order, you can contact SACAT [here.](http://www.sacat.sa.gov.au/contact-us)
+    The  date of the original order can be found on the order that SACAT sent to you. If you do not have a copy of the order, you can contact SACAT [here.](http://www.sacat.sa.gov.au/contact-us)
 fields:
   - Date: EHNdate
     datatype: date
     default: |
-      ${ date}
+      ${ date }
 ---
 code: |
   date = "4/6/2020"
 ---
-mandatory: True
 question: |
 fields:
-  - "Do you want to put the entire decision on hold?": EHNPart_of_decision
+  - "Do you want to put the entire decision on hold?": EHNpart_of_decision
     datatype: yesnoradio
-  - "What part or parts of the decision to you want to put on hold?, Please write down the parts in the order they're listed on your order.               Please say why you think each order should be put on hold, one by one. Please write down the number or text exactly what is written on the form." : decision_hold
+  - "What part or parts of the decision to you want to put on hold? Please write the number of each part in the way they have been listed in the decision." : decision_hold
+    datatype: area
     show if:
-      variable: EHNPart_of_decision
+      variable: EHNpart_of_decision
       is: False
     default: |
       ${ partorder }
 ---
 code: |
-  partorder = "1. eviction, 2. the other thing"  
-    
-
+  partorder = "1. Eviction"  
 ---
-mandatory: True
-question: What arguments are you putting forward to support your request for a stay?
+question: Please set out the reasons why you are asking for the original order to be put on hold.
 subquestion: |
-     For examples of likely successful and unsuccessful arguments please refer to SACAT’s application for stay factsheet in the link [here.](http://www.sacat.sa.gov.au/upload/Factsheet%20-%20Seeking%20a%20Stay%20of%20a%20Tribunal%20Order.pdf)
+     For further information about setting out reasons [click here.](http://www.sacat.sa.gov.au/upload/Factsheet%20-%20Seeking%20a%20Stay%20of%20a%20Tribunal%20Order.pdf)
      
-     **Note:** These examples are to be used as a guide. Each user’s situation will be different, so this is only a general guide.  
+     **Note:** Each user’s situation will be different. This is only a general guide.  
 fields:
  - no label: EHNargument
    datatype: area
@@ -219,11 +214,9 @@ fields:
       ${ argument }
 ---
 code: |
-  argument = "1. eviction- I dont think I should be evicted because my landlord Rob and I had a conversation where he told me he would never kick me out..."  
-    
+  argument = "1. Eviction- I don't think I should be evicted because my landlord Rob and I had a conversation where he told me he would never kick me out..."  
 ---
-mandatory: True
-question: What evidence are you presenting in support of putting your order or decision on hold?
+question: Do you have any documents that you would like to provide in support of your application? Please set out what those documents are.
 subquestion: |
   Include anything you think will support your argument.
 fields:
@@ -233,15 +226,13 @@ fields:
       ${ evidence }
 ---
 code: |
-  evidence = "1. eviction- I have an email that confirms that my landlord said he wouldnt kick me out. I also have en email with my landlord saying he would lower the cost of my rent."  
-    
+  evidence = "1. Eviction- I have an email that confirms that my landlord said he wouldn't kick me out. I also have an email with my landlord saying he would lower the cost of my rent."  
 ---
-mandatory: True
 question: What are the consequences if your order or decison is not put on hold?
 subquestion: |
   For example, no stay will result in homelessness.
  
-  **Note to user:**  SACAT may contact the other party, or parties, in this matter concerning the consequences which your application for stay may have on them.
+  **Note:**  SACAT may contact the other party, or parties, in this matter concerning the consequences which your application for stay may have on them.
  
   As a result, be aware that a copy of the document which will be produced may be provided to the to the other party, or parties, in this matter.
 fields:
@@ -251,13 +242,9 @@ fields:
       ${ consequences }
 ---
 code: |
-  consequences = "All my family and friends are in New Zealand so I have nowhere to stay. I dont have enough money to stay at a hotel for a long period of time."  
- 
+  consequences = "All my family and friends are in New Zealand so I will have nowhere to stay. I don't have enough money to stay at a hotel for a long period of time."
 ---
-mandatory: True
-question: What decision do you want SACAT to make in response to the decision or order made against you?  
-subquestion: |
-  For example, wanting SACAT to grant a stay of an eviction order.
+question: What outcome are you seeking from SACAT?
 fields:
  - no label: EHNorder
    datatype: area
@@ -265,14 +252,10 @@ fields:
       ${ Order }
 ---
 code: |
-  Order = " I want SACAT to stay the order evicting me from my home."     
+  Order = "I want SACAT to stay the order kicking me out of my home."     
 ---
-
-mandatory: True
-question: Have you talked to any other parties about this application?
+question: Have you corresponded with the other party about your request for a stay of the original order?
 subquestion: |
-  This can include face-to-face conversation, phone calls, emails etc.
- 
   If so, please explain the outcome of the communication with the other party.
 fields:
  - no label: EHNparties
@@ -281,5 +264,5 @@ fields:
       ${ parties }
 ---
 code: |
-  parties = " I have talked to my landlord Rob. I asked him why he is trying to kick me out of my home. He said he decided it was the right thing to do but that doesnt make sense to me. I told him that and he got angry and walked away."     
+  parties = "I have talked to my landlord Rob. I asked him why he is trying to kick me out of my home. He said he decided it was the right thing to do but that doesn't make sense to me. I told him that and he got angry and walked away."
 ---
