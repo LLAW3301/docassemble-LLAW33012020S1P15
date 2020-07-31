@@ -98,13 +98,13 @@ subquestion: |
   Your name|${ EHNsalutation } ${ EHNfirstname } ${ EHNlastname} ${ EHNemailaddress } ${ EHNphonenumber }
   Applicant or not|${ EHNtype }
   Applied for internal review|${ EHNyes_internal_review }
-  Reference number|${ EHNSACAT_ref_no } ${ Refno }
+  Reference number|${ EHNSACAT_ref_no }
   Date of original decision|${ EHNdate }
-  Part of decision|${ EHNpart_of_decision } ${ partorder }
+  Part of decision|${ EHNpart_of_decision } 
   Argument|${ EHNargument }
   Evidence|${ EHNevidence }
   Consequences|${ EHNconsequence }
-  Order seeking|${ EHNorder } ${ Order }
+  Order seeking|${ EHNorder }
   Other party|${ EHNparties }
 attachment:
   docx template file: application_for_stay_form1.docx
@@ -123,27 +123,10 @@ fields:
       - Mr
       - Mrs
       - Ms
-    default: |
-     ${ Salutation }
   - First Name: EHNfirstname
-    default: |
-      ${ Firstname }
-  - Last Name: EHNlastname
-    default: |
-      ${ Lastname }
+  - Last Name: EHNlastname     
   - Email address: EHNemailaddress
-    default: |
-      ${ Emailaddress }
   - Phone Number: EHNphonenumber
-    default: |
-      ${ PhoneNumber }
----
-code: |
-  Salutation = "Mr"
-  Firstname = "Bob"
-  Lastname = "Needshelp"
-  Emailaddress = "bob.jane@hotmail.com"
-  PhoneNumber = "0423346778"
 ---
 question: Are you the applicant or are you completing this form out for the applicant?
 fields:
@@ -169,11 +152,7 @@ subquestion: |
   **Note:** Please ensure it is the internal review reference number **not** the reference number for the original decision.
 fields:
   - no label: EHNSACAT_ref_no
-    default: |
-      ${ Refno }
----
-code: |
-  Refno = "1234567"
+
 ---
 question: What is the date of the original decision that SACAT made against you?
 subquestion: |
@@ -181,11 +160,6 @@ subquestion: |
 fields:
   - Date: EHNdate
     datatype: date
-    default: |
-      ${ date }
----
-code: |
-  date = "4/6/2020"
 ---
 question: |
 fields:
@@ -195,12 +169,7 @@ fields:
     datatype: area
     show if:
       variable: EHNpart_of_decision
-      is: False
-    default: |
-      ${ partorder }
----
-code: |
-  partorder = "1. Eviction"  
+      is: False  
 ---
 question: Please set out the reasons why you are asking for the original order to be put on hold.
 subquestion: |
@@ -209,12 +178,7 @@ subquestion: |
      **Note:** Each user’s situation will be different. This is only a general guide.  
 fields:
  - no label: EHNargument
-   datatype: area
-   default: |
-      ${ argument }
----
-code: |
-  argument = "1. Eviction- I don't think I should be evicted because my landlord Rob and I had a conversation where he told me he would never kick me out..."  
+   datatype: area 
 ---
 question: Do you have any documents that you would like to provide in support of your application? Please set out what those documents are.
 subquestion: |
@@ -222,11 +186,6 @@ subquestion: |
 fields:
  - no label: EHNevidence
    datatype: area
-   default: |
-      ${ evidence }
----
-code: |
-  evidence = "1. Eviction- I have an email that confirms that my landlord said he wouldn't kick me out. I also have an email with my landlord saying he would lower the cost of my rent."  
 ---
 question: What are the consequences if your order or decison is not put on hold?
 subquestion: |
@@ -238,21 +197,11 @@ subquestion: |
 fields:
  - no label: EHNconsequence
    datatype: area
-   default: |
-      ${ consequences }
----
-code: |
-  consequences = "All my family and friends are in New Zealand so I will have nowhere to stay. I don't have enough money to stay at a hotel for a long period of time."
 ---
 question: What outcome are you seeking from SACAT?
 fields:
  - no label: EHNorder
    datatype: area
-   default: |
-      ${ Order }
----
-code: |
-  Order = "I want SACAT to stay the order kicking me out of my home."     
 ---
 question: Have you corresponded with the other party about your request for a stay of the original order?
 subquestion: |
@@ -260,9 +209,4 @@ subquestion: |
 fields:
  - no label: EHNparties
    datatype: area
-   default: |
-      ${ parties }
----
-code: |
-  parties = "I have talked to my landlord Rob. I asked him why he is trying to kick me out of my home. He said he decided it was the right thing to do but that doesn't make sense to me. I told him that and he got angry and walked away."
 ---
